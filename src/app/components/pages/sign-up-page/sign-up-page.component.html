@@ -1,0 +1,117 @@
+<mat-card class="signUpPage__card">
+  <mat-card-header class="signUpPage__cardHeader">
+    <mat-card-title>Sign up</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      class="signUpPage__signUpForm"
+      [formGroup]="signUpForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field
+        class="signUpPage__signUpFormElement"
+        appearance="standard"
+      >
+        <mat-label for="name">Name</mat-label>
+        <input
+          matInput
+          id="name"
+          placeholder="John Snow"
+          type="text"
+          formControlName="name"
+          maxlength="255"
+        />
+        <mat-error *ngIf="isEmailErrorPresent('required')"
+          >Name is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field
+        class="signUpPage__signUpFormElement"
+        appearance="standard"
+      >
+        <mat-label for="email">Email</mat-label>
+        <input
+          matInput
+          id="email"
+          placeholder="example@gmail.com"
+          type="text"
+          formControlName="email"
+          maxlength="255"
+        />
+        <mat-error *ngIf="isEmailErrorPresent('required')"
+          >Email is required</mat-error
+        >
+        <mat-error *ngIf="isEmailErrorPresent('email')"
+          >Email is not valid</mat-error
+        >
+      </mat-form-field>
+      <div formGroupName="passwordWithConfirmation">
+        <mat-form-field
+          class="signUpPage__signUpFormElement"
+          appearance="standard"
+        >
+          <mat-label for="password">Password</mat-label>
+          <input
+            matInput
+            id="password"
+            placeholder="zxcqwe123"
+            [type]="getPasswordInputType()"
+            formControlName="password"
+          />
+          <mat-icon
+            matSuffix
+            class="signUpPage__showPasswordButton"
+            (click)="toggleShowPassword()"
+            >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+          >
+          <mat-error *ngIf="isPasswordErrorPresent('required')"
+            >Password is required</mat-error
+          >
+          <mat-error *ngIf="isPasswordErrorPresent('minlength')"
+            >Password length should be greater or equal 6</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field
+          class="signUpPage__signUpFormElement"
+          appearance="standard"
+        >
+          <mat-label for="passwordConfirmation"
+            >Password confirmation</mat-label
+          >
+          <input
+            matInput
+            id="passwordConfirmation"
+            placeholder="zxcqwe123"
+            [type]="getPasswordConfirmationInputType()"
+            formControlName="passwordConfirmation"
+          />
+          <mat-icon
+            matSuffix
+            class="signUpPage__showPasswordConfirmationButton"
+            (click)="toggleShowPasswordConfirmation()"
+            >{{
+              showPasswordConfirmation ? "visibility" : "visibility_off"
+            }}</mat-icon
+          >
+          <mat-error *ngIf="isPasswordConfirmationErrorPresent('required')"
+            >Password confirmation is required</mat-error
+          >
+          <mat-error *ngIf="isPasswordConfirmationErrorPresent('minlength')"
+            >Password confirmation length should be greater or equal
+            6</mat-error
+          >
+          <mat-error *ngIf="arePasswordAndConfirmationDifferent()"
+            >Password and password confirmation should be equal</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <button
+        class="signUpPage__signUpFormSubmitButton"
+        mat-raised-button
+        color="primary"
+      >
+        Sign up
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

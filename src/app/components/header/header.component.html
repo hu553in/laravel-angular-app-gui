@@ -1,0 +1,22 @@
+<nav class="header__navBar">
+  <a
+    mat-button
+    color="primary"
+    *ngFor="let navBarLink of navBarLinks"
+    [routerLink]="navBarLink.url"
+  >
+    {{ navBarLink.name }}
+  </a>
+</nav>
+<p class="header__name" *ngIf="!!userService.user">
+  {{ userService.user.name }}
+</p>
+<button
+  mat-raised-button
+  color="primary"
+  *ngIf="!!userService.user"
+  class="header__logoutButton"
+  (click)="logout()"
+>
+  Logout
+</button>
