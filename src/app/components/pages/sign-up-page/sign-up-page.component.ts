@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-sign-up-page',
   templateUrl: './sign-up-page.component.html',
-  styleUrls: ['./sign-up-page.component.scss'],
+  styleUrls: ['./sign-up-page.component.scss']
 })
 export class SignUpPageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -53,10 +53,10 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
           passwordConfirmation: [
             '',
             [Validators.required, Validators.minLength(6)],
-          ],
+          ]
         },
         { validators: [this.passwordWithConfirmationValidator] }
-      ),
+      )
     });
   }
 
@@ -76,28 +76,11 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
   getPasswordConfirmationInputType = () =>
     this.showPasswordConfirmation ? 'text' : 'password'
 
-  areNameErrorsPresent = () =>
-    !!this.signUpForm.get('name').errors
-
-  areEmailErrorsPresent = () =>
-    !!this.signUpForm.get('email').errors
-
-  arePasswordErrorsPresent = () =>
-    !!this.signUpForm.get('passwordWithConfirmation').get('password').errors
-
-  arePasswordConfirmationErrorsPresent = () =>
-    !!this.signUpForm
-      .get('passwordWithConfirmation')
-      .get('passwordConfirmation').errors
-
   arePasswordWithConfirmationErrorsPresent = () =>
     !!this.signUpForm.get('passwordWithConfirmation').errors
 
-  isNameErrorPresent = (errorName: string) =>
-    !!this.signUpForm.get('name').hasError(errorName)
-
-  isEmailErrorPresent = (errorName: string) =>
-    !!this.signUpForm.get('email').hasError(errorName)
+  isFieldErrorPresent = (fieldName: string, errorName: string) =>
+    !!this.signUpForm.get(fieldName).hasError(errorName)
 
   isPasswordErrorPresent = (errorName: string) =>
     !!this.signUpForm
@@ -124,11 +107,11 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     const {
       name,
       email,
-      passwordWithConfirmation,
+      passwordWithConfirmation
     } = this.signUpForm.controls;
     const {
       password,
-      passwordConfirmation,
+      passwordConfirmation
     } = (passwordWithConfirmation as FormGroup).controls;
     this.subscriptions.push(
       this.userService
@@ -136,7 +119,7 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
           name: name.value,
           email: email.value,
           password: password.value,
-          password_confirmation: passwordConfirmation.value,
+          password_confirmation: passwordConfirmation.value
         })
         .subscribe((_) => this.router.navigate([`/${ROUTES.DEFAULT}`]))
     );

@@ -21,7 +21,7 @@ export class InjectJwtInterceptor implements HttpInterceptor {
         headers: request.headers.set(
           'Authorization',
           `Bearer ${this.localStorageService.getJwt()}`
-        ),
+        )
       });
       return next.handle(clonedRequest);
     }

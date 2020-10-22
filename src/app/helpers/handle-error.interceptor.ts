@@ -1,9 +1,4 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -24,7 +19,7 @@ export class HandleErrorInterceptor implements HttpInterceptor {
     this.snackBar.open(message, 'HIDE', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'top',
+      verticalPosition: 'top'
     });
   }
 

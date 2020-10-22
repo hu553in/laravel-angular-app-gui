@@ -25,7 +25,10 @@ interface GetAllPublicTransportParams {
 export class PublicTransportService {
   private readonly apiMethod = API_METHODS.PUBLIC_TRANSPORT;
 
-  constructor(private httpClient: HttpClient, private loadingService: LoadingService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private loadingService: LoadingService
+  ) { }
 
   getAll(
     params: GetAllPublicTransportParams

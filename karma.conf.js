@@ -21,7 +21,7 @@ module.exports = function (config) {
         "./coverage/laravel-angular-app-gui"
       ),
       reports: ["html", "lcovonly", "text-summary"],
-      fixWebpackSourcePaths: true,
+      fixWebpackSourcePaths: true
     },
     reporters: ["progress", "kjhtml"],
     port: 9876,
@@ -32,10 +32,10 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: "ChromeHeadless",
-        flags: ["--no-sandbox"],
-      },
+        flags: ["--no-sandbox"]
+      }
     },
     singleRun: false,
-    restartOnFileChange: true,
+    restartOnFileChange: true
   });
 };

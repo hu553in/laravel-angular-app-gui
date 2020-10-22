@@ -1,25 +1,28 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
+import { Subscription } from 'rxjs';
 import {
   DEFAULT_PAGE,
   DEFAULT_ROWS,
-  PUBLIC_TRANSPORT_TABLE_ACTION_TYPES,
+  PUBLIC_TRANSPORT_FORM_ACTION_MAPPING,
+  PUBLIC_TRANSPORT_TABLE_ACTIONS,
   PUBLIC_TRANSPORT_TABLE_COLUMNS,
   PUBLIC_TRANSPORT_TYPE_MAPPING,
   ROWS_OPTIONS
 } from 'src/app/misc/constants';
 import { PublicTransport } from 'src/app/models/public-transport.model';
+import { PublicTransportFormService } from 'src/app/services/public-transport-form.service';
 import { PublicTransportService } from 'src/app/services/public-transport.service';
 
 export interface TableAction {
-  type: PUBLIC_TRANSPORT_TABLE_ACTION_TYPES;
+  type: PUBLIC_TRANSPORT_TABLE_ACTIONS;
   name: string;
 }
 
-interface State {
+export interface PublicTransportTableState {
   page: number;
   rows: number;
   sortBy: string;
@@ -31,25 +34,25 @@ interface State {
 @Component({
   selector: 'app-public-transport-table',
   templateUrl: './public-transport-table.component.html',
-  styleUrls: ['./public-transport-table.component.scss'],
+  styleUrls: ['./public-transport-table.component.scss']
 })
-export class PublicTransportTableComponent {
+export class PublicTransportTableComponent implements OnDestroy {
+  private subscriptions: Subscription[] = [];
   readonly columns = PUBLIC_TRANSPORT_TABLE_COLUMNS;
   readonly rowsOptions = ROWS_OPTIONS;
-  state: State = {
+  publicTransportTableActions = PUBLIC_TRANSPORT_TABLE_ACTIONS;
+  publicTransportTypeMapping = PUBLIC_TRANSPORT_TYPE_MAPPING;
+  publicTransportTypes = Object.keys(this.publicTransportTypeMapping);
+  typeSelectFormControl = new FormControl();
+  organizationNameSelectFormControl = new FormControl();
+  state: PublicTransportTableState = {
     page: DEFAULT_PAGE,
     rows: DEFAULT_ROWS,
     sortBy: 'id',
     order: 'asc',
     type: [],
-    organizationName: [],
+    organizationName: []
   };
-  publicTransportTypeMapping = PUBLIC_TRANSPORT_TYPE_MAPPING;
-  publicTransportTypes = Object.keys(this.publicTransportTypeMapping);
-  typeSelectFormControl = new FormControl();
-  organizationNameSelectFormControl = new FormControl();
-
-  constructor(public publicTransportService: PublicTransportService) { }
 
   @Input()
   props: {
@@ -58,7 +61,7 @@ export class PublicTransportTableComponent {
     headers: string[];
     rows: number;
     total: number;
-    onChange: (
+    loadData: (
       page: number,
       rows: number,
       sortBy: string,
@@ -66,48 +69,84 @@ export class PublicTransportTableComponent {
       type: string[],
       organizationName: string[]
     ) => void;
-    onTableActionClick: (action: TableAction, row: PublicTransport) => void;
+    onClickTableAction: (action: TableAction, row: PublicTransport) => void;
   };
+
+  constructor(
+    public publicTransportService: PublicTransportService,
+    private publicTransportFormService: PublicTransportFormService
+  ) { }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  onCreateSubmit = (
+    type: string,
+    routeNumber: string,
+    capacity: number,
+    organizationName: string
+  ) => {
+    this.subscriptions.push(
+      this.publicTransportService
+        .add({
+          type,
+          route_number: routeNumber,
+          capacity,
+          organization_name: organizationName
+        })
+        .subscribe((_) => this.callLoadData())
+    );
+  }
+
+  onAddButtonClick = () => this.publicTransportFormService.openForm(
+    PUBLIC_TRANSPORT_FORM_ACTION_MAPPING.CREATE,
+    null,
+    null,
+    null,
+    null,
+    this.onCreateSubmit
+  )
 
   onPaginatorStateChange = (event: PageEvent) => {
     this.state = {
       ...this.state,
       page: event.pageIndex + 1,
-      rows: event.pageSize,
+      rows: event.pageSize
     };
-    this.callPropsOnChange();
+    this.callLoadData();
   }
 
   onTypeSelectStateChange = (event: MatSelectChange) => {
     this.state = {
       ...this.state,
-      type: event.value,
+      type: event.value
     };
-    this.callPropsOnChange();
+    this.callLoadData();
   }
 
   onOrganizationNameSelectStateChange = (event: MatSelectChange) => {
     this.state = {
       ...this.state,
-      organizationName: event.value,
+      organizationName: event.value
     };
-    this.callPropsOnChange();
+    this.callLoadData();
   }
 
   onSortStateChange = (event: Sort) => {
     this.state = {
       ...this.state,
       sortBy: event.active,
-      order: event.direction,
+      order: event.direction
     };
-    this.callPropsOnChange();
+    this.callLoadData();
   }
 
-  callPropsOnChange = () => {
+  callLoadData = () => {
     const { page, rows, sortBy, order, type, organizationName } = this.state;
-    this.props.onChange(page, rows, sortBy, order, type, organizationName);
+    this.props.loadData(page, rows, sortBy, order, type, organizationName);
   }
 
-  onTableActionClick = (action: TableAction, row: PublicTransport) =>
-    this.props.onTableActionClick(action, row)
+  onClickTableAction = (action: TableAction, row: PublicTransport) =>
+    this.props.onClickTableAction(action, row)
 }

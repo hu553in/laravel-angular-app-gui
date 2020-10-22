@@ -5,7 +5,7 @@ import { Link } from '../../header/header.component';
 @Component({
   selector: 'app-user-layout',
   templateUrl: './user-layout.component.html',
-  styleUrls: ['./user-layout.component.scss'],
+  styleUrls: ['./user-layout.component.scss']
 })
 export class UserLayoutComponent {
   navBarLinks: Link[] = [

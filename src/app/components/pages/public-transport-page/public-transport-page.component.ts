@@ -1,22 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   DEFAULT_PAGE,
   DEFAULT_ROWS,
-  PUBLIC_TRANSPORT_TABLE_ACTION_TYPES,
-  PUBLIC_TRANSPORT_TABLE_COLUMNS,
-  PUBLIC_TRANSPORT_TYPE_MAPPING
+  PUBLIC_TRANSPORT_FORM_ACTION_MAPPING,
+  PUBLIC_TRANSPORT_TABLE_ACTIONS,
+  PUBLIC_TRANSPORT_TABLE_COLUMNS
 } from 'src/app/misc/constants';
 import { GetAllPublicTransportResponse } from 'src/app/models/get-all-public-transport-response.model';
 import { PublicTransport } from 'src/app/models/public-transport.model';
 import { OrganizationNameService } from 'src/app/services/organization-name.service';
+import { PublicTransportFormService } from 'src/app/services/public-transport-form.service';
 import { PublicTransportService } from 'src/app/services/public-transport.service';
-import { TableAction } from '../../public-transport-table/public-transport-table.component';
+import {
+  PublicTransportTableComponent,
+  TableAction
+} from '../../public-transport-table/public-transport-table.component';
 
 @Component({
   selector: 'app-public-transport-page',
   templateUrl: './public-transport-page.component.html',
-  styleUrls: ['./public-transport-page.component.scss'],
+  styleUrls: ['./public-transport-page.component.scss']
 })
 export class PublicTransportPageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -24,15 +28,19 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
     _meta: {
       total: 0,
       rows: 0,
-      total_pages: 0,
+      total_pages: 0
     },
-    paginated_data: [],
+    paginated_data: []
   };
   organizationNames: string[] = [];
 
+  @ViewChild(PublicTransportTableComponent)
+  publicTransportTableComponent: PublicTransportTableComponent;
+
   constructor(
     public publicTransportService: PublicTransportService,
-    private organizationNameService: OrganizationNameService
+    private organizationNameService: OrganizationNameService,
+    private publicTransportFormService: PublicTransportFormService
   ) { }
 
   ngOnInit(): void {
@@ -43,25 +51,67 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  handleTableActionClick = (action: TableAction, row: PublicTransport) => {
+  onUpdateSubmit = (
+    id: number,
+    type: string,
+    routeNumber: string,
+    capacity: number,
+    organizationName: string
+  ) => {
+    this.subscriptions.push(
+      this.publicTransportService
+        .updateById(id, {
+          type,
+          route_number: routeNumber,
+          capacity,
+          organization_name: organizationName
+        })
+        .subscribe((_) => this.loadData(
+          this.publicTransportTableComponent.state.page,
+          this.publicTransportTableComponent.state.rows,
+          this.publicTransportTableComponent.state.sortBy,
+          this.publicTransportTableComponent.state.order,
+          this.publicTransportTableComponent.state.type,
+          this.publicTransportTableComponent.state.organizationName
+        ))
+    );
+  }
+
+  handleClickTableAction = (action: TableAction, row: PublicTransport) => {
     switch (action.type) {
-      case PUBLIC_TRANSPORT_TABLE_ACTION_TYPES.EDIT: {
-        // TODO: implement edit feature
+      case PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT: {
+        this.publicTransportFormService.openForm(
+          PUBLIC_TRANSPORT_FORM_ACTION_MAPPING.EDIT,
+          row.type,
+          row.route_number,
+          row.capacity,
+          row.organization_name,
+          (
+            type: string,
+            routeNumber: string,
+            capacity: number,
+            organizationName: string
+          ) => this.onUpdateSubmit(
+            row.id,
+            type,
+            routeNumber,
+            capacity,
+            organizationName
+          )
+        );
         break;
       }
-      case PUBLIC_TRANSPORT_TABLE_ACTION_TYPES.DELETE: {
-        const pageFromMeta = this.data._meta.page;
-        const page = pageFromMeta ? pageFromMeta : DEFAULT_PAGE;
+      case PUBLIC_TRANSPORT_TABLE_ACTIONS.DELETE: {
         this.subscriptions.push(
           this.publicTransportService
             .deleteById(row.id)
             .subscribe((_) => this.loadData(
-              page,
-              this.data._meta.rows,
-              'id',
-              'asc',
-              null,
-              null
+              this.publicTransportTableComponent.state.page,
+              this.publicTransportTableComponent.state.rows,
+              this.publicTransportTableComponent.state.sortBy,
+              this.publicTransportTableComponent.state.order,
+              this.publicTransportTableComponent.state.type,
+              this.publicTransportTableComponent.state.organizationName
             ))
         );
         break;
@@ -76,8 +126,8 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
       headers: PUBLIC_TRANSPORT_TABLE_COLUMNS,
       rows: this.data._meta.rows,
       total: this.data._meta.total,
-      onChange: this.loadData,
-      onTableActionClick: this.handleTableActionClick,
+      loadData: this.loadData,
+      onClickTableAction: this.handleClickTableAction
     };
   }
 
@@ -108,13 +158,12 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
         paginated_data: response.data.paginated_data.map(
           (publicTransport: PublicTransport) => ({
             ...publicTransport,
-            type: PUBLIC_TRANSPORT_TYPE_MAPPING[publicTransport.type],
             actions: [
-              { type: PUBLIC_TRANSPORT_TABLE_ACTION_TYPES.EDIT },
-              { type: PUBLIC_TRANSPORT_TABLE_ACTION_TYPES.DELETE },
-            ],
+              { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT },
+              { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.DELETE },
+            ]
           })
-        ),
+        )
       }))
   )
 

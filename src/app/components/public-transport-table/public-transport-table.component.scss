@@ -1,3 +1,20 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.publicTransportTable__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .publicTransportTable__filter {
   margin-left: 20px;
+}
+
+.publicTransportTable__addButton {
+  margin-left: auto;
+  margin-right: 20px;
 }

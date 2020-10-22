@@ -11,7 +11,10 @@ import { LoadingService } from './loading.service';
 export class OrganizationNameService {
   private readonly apiMethod = API_METHODS.ORGANIZATION_NAME;
 
-  constructor(private httpClient: HttpClient, private loadingService: LoadingService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private loadingService: LoadingService
+  ) { }
 
   getAll(): Observable<ApiResponse<string[]>> {
     const loadingSubscription = this.loadingService.subscribe();

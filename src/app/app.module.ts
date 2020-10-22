@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -19,12 +20,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { PublicTransportLayoutComponent } from './components/layouts/public-transport-layout/public-transport-layout.component';
+import {
+  PublicTransportLayoutComponent
+} from './components/layouts/public-transport-layout/public-transport-layout.component';
 import { UserLayoutComponent } from './components/layouts/user-layout/user-layout.component';
-import { PublicTransportPageComponent } from './components/pages/public-transport-page/public-transport-page.component';
+import {
+  PublicTransportPageComponent
+} from './components/pages/public-transport-page/public-transport-page.component';
 import { SignInPageComponent } from './components/pages/sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './components/pages/sign-up-page/sign-up-page.component';
-import { PublicTransportTableComponent } from './components/public-transport-table/public-transport-table.component';
+import {
+  PublicTransportFormComponent
+} from './components/public-transport-form/public-transport-form.component';
+import {
+  PublicTransportTableComponent
+} from './components/public-transport-table/public-transport-table.component';
 import { HandleErrorInterceptor } from './helpers/handle-error.interceptor';
 import { HandleRefreshedJwtInterceptor } from './helpers/handle-refreshed-jwt.interceptor';
 import { InjectJwtInterceptor } from './helpers/inject-jwt.interceptor';
@@ -39,6 +49,7 @@ import { InjectJwtInterceptor } from './helpers/inject-jwt.interceptor';
     PublicTransportLayoutComponent,
     UserLayoutComponent,
     PublicTransportTableComponent,
+    PublicTransportFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +58,7 @@ import { InjectJwtInterceptor } from './helpers/inject-jwt.interceptor';
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatSelectModule,
@@ -65,14 +77,14 @@ import { InjectJwtInterceptor } from './helpers/inject-jwt.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HandleRefreshedJwtInterceptor,
-      multi: true,
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HandleErrorInterceptor,
-      multi: true,
+      multi: true
     },
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

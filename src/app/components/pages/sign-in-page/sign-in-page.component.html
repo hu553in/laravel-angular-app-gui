@@ -21,12 +21,12 @@
           formControlName="email"
           maxlength="255"
         />
-        <mat-error *ngIf="isEmailErrorPresent('required')"
-          >Email is required</mat-error
-        >
-        <mat-error *ngIf="isEmailErrorPresent('email')"
-          >Email is not valid</mat-error
-        >
+        <mat-error *ngIf="isFieldErrorPresent('email', 'required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="isFieldErrorPresent('email', 'email')">
+          Email is not valid
+        </mat-error>
       </mat-form-field>
       <mat-form-field
         class="signInPage__signInFormElement"
@@ -44,14 +44,15 @@
           matSuffix
           class="signInPage__showPasswordButton"
           (click)="toggleShowPassword()"
-          >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
         >
-        <mat-error *ngIf="isPasswordErrorPresent('required')"
-          >Password is required</mat-error
-        >
-        <mat-error *ngIf="isPasswordErrorPresent('minlength')"
-          >Password length should be greater or equal 6</mat-error
-        >
+          {{ showPassword ? "visibility" : "visibility_off" }}
+        </mat-icon>
+        <mat-error *ngIf="isFieldErrorPresent('password', 'required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="isFieldErrorPresent('password', 'minlength')">
+          Password length should be greater or equal 6
+        </mat-error>
       </mat-form-field>
       <button
         class="signInPage__signInFormSubmitButton"
