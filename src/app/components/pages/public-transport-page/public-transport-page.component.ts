@@ -133,37 +133,30 @@ export class PublicTransportPageComponent implements OnDestroy {
     type?: string[],
     organizationName?: string[]
   ) => {
-    this.loadPublicTransport(page, rows, sortBy, order, type, organizationName);
-    this.loadOrganizationNames();
+    this.subscriptions.push(
+      this.publicTransportService
+        .getAll({ page, rows, sortBy, order, type, organizationName })
+        .subscribe(publicTransportResponse => {
+          this.data = {
+            _meta: publicTransportResponse.data._meta,
+            paginated_data: publicTransportResponse.data.paginated_data.map(
+              (publicTransport: PublicTransport) => ({
+                ...publicTransport,
+                actions: [
+                  { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT },
+                  { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.DELETE },
+                ]
+              })
+            )
+          };
+          this.subscriptions.push(
+            this.organizationNameService
+              .getAll()
+              .subscribe(organizationNameResponse => (
+                this.organizationNames = organizationNameResponse.data
+              ))
+          );
+        })
+    );
   }
-
-  loadPublicTransport = (
-    page: number,
-    rows: number,
-    sortBy: string,
-    order: string,
-    type: string[],
-    organizationName: string[]
-  ) => this.subscriptions.push(
-    this.publicTransportService
-      .getAll({ page, rows, sortBy, order, type, organizationName })
-      .subscribe(response => (this.data = {
-        _meta: response.data._meta,
-        paginated_data: response.data.paginated_data.map(
-          (publicTransport: PublicTransport) => ({
-            ...publicTransport,
-            actions: [
-              { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT },
-              { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.DELETE },
-            ]
-          })
-        )
-      }))
-  )
-
-  loadOrganizationNames = () => this.subscriptions.push(
-    this.organizationNameService
-      .getAll()
-      .subscribe(response => (this.organizationNames = response.data))
-  )
 }
