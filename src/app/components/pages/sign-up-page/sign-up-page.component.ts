@@ -82,17 +82,12 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
   isFieldErrorPresent = (fieldName: string, errorName: string) =>
     !!this.signUpForm.get(fieldName).hasError(errorName)
 
-  isPasswordErrorPresent = (errorName: string) =>
-    !!this.signUpForm
-      .get('passwordWithConfirmation')
-      .get('password')
-      .hasError(errorName)
-
-  isPasswordConfirmationErrorPresent = (errorName: string) =>
-    !!this.signUpForm
-      .get('passwordWithConfirmation')
-      .get('passwordConfirmation')
-      .hasError(errorName)
+  isPasswordWithConfirmationFieldErrorPresent =
+    (fieldName: string, errorName: string) =>
+      !!this.signUpForm
+        .get('passwordWithConfirmation')
+        .get(fieldName)
+        .hasError(errorName)
 
   arePasswordAndConfirmationDifferent = () =>
     this.arePasswordWithConfirmationErrorsPresent() &&

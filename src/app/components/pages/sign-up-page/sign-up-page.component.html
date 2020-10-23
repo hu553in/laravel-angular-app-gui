@@ -65,10 +65,14 @@
           >
             {{ showPassword ? "visibility" : "visibility_off" }}
           </mat-icon>
-          <mat-error *ngIf="isPasswordErrorPresent('required')">
+          <mat-error
+            *ngIf="isPasswordWithConfirmationFieldErrorPresent('password', 'required')"
+          >
             Password is required
           </mat-error>
-          <mat-error *ngIf="isPasswordErrorPresent('minlength')">
+          <mat-error
+            *ngIf="isPasswordWithConfirmationFieldErrorPresent('password', 'minlength')"
+          >
             Password length should be greater or equal 6
           </mat-error>
         </mat-form-field>
@@ -93,10 +97,14 @@
           >
             {{ showPasswordConfirmation ? "visibility" : "visibility_off" }}
           </mat-icon>
-          <mat-error *ngIf="isPasswordConfirmationErrorPresent('required')">
+          <mat-error
+            *ngIf="isPasswordWithConfirmationFieldErrorPresent('passwordConfirmation', 'required')"
+          >
             Password confirmation is required
           </mat-error>
-          <mat-error *ngIf="isPasswordConfirmationErrorPresent('minlength')">
+          <mat-error
+            *ngIf="isPasswordWithConfirmationFieldErrorPresent('passwordConfirmation', 'minlength')"
+          >
             Password confirmation length should be greater or equal 6
           </mat-error>
           <mat-error *ngIf="arePasswordAndConfirmationDifferent()">

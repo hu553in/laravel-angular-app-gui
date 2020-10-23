@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
-  DEFAULT_PAGE,
-  DEFAULT_ROWS,
   PUBLIC_TRANSPORT_FORM_ACTION_MAPPING,
   PUBLIC_TRANSPORT_TABLE_ACTIONS,
   PUBLIC_TRANSPORT_TABLE_COLUMNS
@@ -22,7 +20,7 @@ import {
   templateUrl: './public-transport-page.component.html',
   styleUrls: ['./public-transport-page.component.scss']
 })
-export class PublicTransportPageComponent implements OnInit, OnDestroy {
+export class PublicTransportPageComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
   data: GetAllPublicTransportResponse = {
     _meta: {
@@ -42,10 +40,6 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
     private organizationNameService: OrganizationNameService,
     private publicTransportFormService: PublicTransportFormService
   ) { }
-
-  ngOnInit(): void {
-    this.loadData(DEFAULT_PAGE, DEFAULT_ROWS, 'id', 'asc', [], []);
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
@@ -82,10 +76,6 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
       case PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT: {
         this.publicTransportFormService.openForm(
           PUBLIC_TRANSPORT_FORM_ACTION_MAPPING.EDIT,
-          row.type,
-          row.route_number,
-          row.capacity,
-          row.organization_name,
           (
             type: string,
             routeNumber: string,
@@ -97,7 +87,11 @@ export class PublicTransportPageComponent implements OnInit, OnDestroy {
             routeNumber,
             capacity,
             organizationName
-          )
+          ),
+          row.type,
+          row.route_number,
+          row.capacity,
+          row.organization_name
         );
         break;
       }

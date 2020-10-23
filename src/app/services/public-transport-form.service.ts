@@ -11,16 +11,16 @@ export class PublicTransportFormService {
 
   openForm = (
     action: string,
-    type: string,
-    routeNumber: string,
-    capacity: number,
-    organizationName: string,
     onSubmit: (
       type: string,
       routeNumber: string,
       capacity: number,
       organizationName: string
-    ) => void
+    ) => void,
+    type?: string,
+    routeNumber?: string,
+    capacity?: number,
+    organizationName?: string
   ) => {
     const formConfig = new MatDialogConfig<PublicTransportFormData>();
     formConfig.data = {

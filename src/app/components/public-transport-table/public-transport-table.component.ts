@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
@@ -36,7 +36,7 @@ export interface PublicTransportTableState {
   templateUrl: './public-transport-table.component.html',
   styleUrls: ['./public-transport-table.component.scss']
 })
-export class PublicTransportTableComponent implements OnDestroy {
+export class PublicTransportTableComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   readonly columns = PUBLIC_TRANSPORT_TABLE_COLUMNS;
   readonly rowsOptions = ROWS_OPTIONS;
@@ -77,6 +77,10 @@ export class PublicTransportTableComponent implements OnDestroy {
     private publicTransportFormService: PublicTransportFormService
   ) { }
 
+  ngOnInit(): void {
+    this.callLoadData();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -101,10 +105,6 @@ export class PublicTransportTableComponent implements OnDestroy {
 
   onAddButtonClick = () => this.publicTransportFormService.openForm(
     PUBLIC_TRANSPORT_FORM_ACTION_MAPPING.CREATE,
-    null,
-    null,
-    null,
-    null,
     this.onCreateSubmit
   )
 
@@ -118,18 +118,12 @@ export class PublicTransportTableComponent implements OnDestroy {
   }
 
   onTypeSelectStateChange = (event: MatSelectChange) => {
-    this.state = {
-      ...this.state,
-      type: event.value
-    };
+    this.state.type = event.value;
     this.callLoadData();
   }
 
   onOrganizationNameSelectStateChange = (event: MatSelectChange) => {
-    this.state = {
-      ...this.state,
-      organizationName: event.value
-    };
+    this.state.organizationName = event.value;
     this.callLoadData();
   }
 
