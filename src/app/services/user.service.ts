@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { API_METHODS } from 'src/app/misc/constants';
 import { ApiResponse } from 'src/app/models/api-response.model';
 import { SignInRequest } from 'src/app/models/sign-in-request.model';
@@ -10,11 +9,13 @@ import { SignInResponse } from 'src/app/models/sign-in-response.model';
 import { SignUpRequest } from 'src/app/models/sign-up-request.model';
 import { SignUpResponse } from 'src/app/models/sign-up-response.model';
 import { User } from 'src/app/models/user.model';
+import { environment } from 'src/environments/environment';
 import { LoadingService } from './loading.service';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserService implements OnDestroy {
+  private subscriptions: Subscription[] = [];
   private userSubject: BehaviorSubject<User>;
 
   constructor(
@@ -25,6 +26,10 @@ export class UserService {
     this.userSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('user'))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   get user(): User {
@@ -72,9 +77,30 @@ export class UserService {
   }
 
   logout(): void {
-    this.localStorageService.removeJwt();
-    this.localStorageService.removeUser();
-    localStorage.removeItem('user');
-    this.userSubject.next(null);
+    const loadingSubscription = this.loadingService.subscribe();
+    if (this.user) {
+      this.userSubject.next(null);
+    }
+    if (this.localStorageService.isUserPresent()) {
+      this.localStorageService.removeUser();
+    }
+    if (this.localStorageService.isJwtPresent()) {
+      const { apiUrl } = environment;
+      const apiMethod = API_METHODS.LOGOUT;
+      const options = {
+        headers: {
+          Authorization: `Bearer ${this.localStorageService.getJwt()}`
+        }
+      };
+      this.localStorageService.removeJwt();
+      this.subscriptions.push(
+        this.httpClient
+          .post<ApiResponse<null>>(`${apiUrl}/${apiMethod}`, null, options)
+          .pipe(finalize(() => loadingSubscription.unsubscribe()))
+          .subscribe()
+      );
+    } else {
+      loadingSubscription.unsubscribe();
+    }
   }
 }

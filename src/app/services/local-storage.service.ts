@@ -30,5 +30,7 @@ export class LocalStorageService {
 
   getUser = () => JSON.parse(localStorage.getItem('user'));
 
+  isUserPresent = () => !!localStorage.getItem('user');
+
   removeUser = () => localStorage.removeItem('user');
 }

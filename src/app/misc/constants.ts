@@ -2,7 +2,8 @@ export const API_METHODS = {
   PUBLIC_TRANSPORT: 'public_transport',
   ORGANIZATION_NAME: 'organization_name',
   SIGN_IN: 'sign_in',
-  SIGN_UP: 'sign_up'
+  SIGN_UP: 'sign_up',
+  LOGOUT: 'logout'
 };
 
 export const ROUTES = {
