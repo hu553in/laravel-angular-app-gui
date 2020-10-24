@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   PublicTransportFormComponent,
   PublicTransportFormData
-} from '../components/public-transport-form/public-transport-form.component';
+} from 'src/app/components/public-transport-form/public-transport-form.component';
 
 @Injectable({ providedIn: 'root' })
 export class PublicTransportFormService {

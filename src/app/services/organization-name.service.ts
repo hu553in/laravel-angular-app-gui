@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { API_METHODS } from '../misc/constants';
-import { ApiResponse } from '../models/api-response.model';
+import { API_METHODS } from 'src/app/misc/constants';
+import { ApiResponse } from 'src/app/models/api-response.model';
 import { LoadingService } from './loading.service';
 
 @Injectable({ providedIn: 'root' })

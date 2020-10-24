@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { API_METHODS } from '../misc/constants';
-import { QueryStringBuilder } from '../misc/query-string-builder';
-import { AddPublicTransportRequest } from '../models/add-public-transport-request.model';
-import { ApiResponse } from '../models/api-response.model';
-import { GetAllPublicTransportResponse } from '../models/get-all-public-transport-response.model';
-import { PublicTransport } from '../models/public-transport.model';
-import { UpdatePublicTransportRequest } from '../models/update-public-transport-request.model';
+import { API_METHODS } from 'src/app/misc/constants';
+import { QueryStringBuilder } from 'src/app/misc/query-string-builder';
+import { AddPublicTransportRequest } from 'src/app/models/add-public-transport-request.model';
+import { ApiResponse } from 'src/app/models/api-response.model';
+import { GetAllPublicTransportResponse } from 'src/app/models/get-all-public-transport-response.model';
+import { PublicTransport } from 'src/app/models/public-transport.model';
+import { UpdatePublicTransportRequest } from 'src/app/models/update-public-transport-request.model';
 import { LoadingService } from './loading.service';
 
 interface GetAllPublicTransportParams {

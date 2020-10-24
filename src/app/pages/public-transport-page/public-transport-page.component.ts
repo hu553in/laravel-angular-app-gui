@@ -13,7 +13,7 @@ import { PublicTransportService } from 'src/app/services/public-transport.servic
 import {
   PublicTransportTableComponent,
   TableAction
-} from '../../public-transport-table/public-transport-table.component';
+} from 'src/app/components/public-transport-table/public-transport-table.component';
 
 @Component({
   selector: 'app-public-transport-page',

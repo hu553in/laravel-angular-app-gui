@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { add, formatISO, isPast, parseISO } from 'date-fns';
-import { User } from '../models/user.model';
+import { User } from 'src/app/models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {

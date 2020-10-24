@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ROUTES } from '../misc/constants';
-import { UserService } from '../services/user.service';
+import { ROUTES } from 'src/app/misc/constants';
+import { UserService } from 'src/app/services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class HandleErrorInterceptor implements HttpInterceptor {

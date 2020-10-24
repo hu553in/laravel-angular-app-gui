@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ROUTES } from 'src/app/misc/constants';
-import { Link } from '../../header/header.component';
+import { Link } from 'src/app/components/header/header.component';
 
 @Component({
   selector: 'app-user-layout',

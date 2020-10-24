@@ -21,14 +21,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import {
-  PublicTransportLayoutComponent
-} from './components/layouts/public-transport-layout/public-transport-layout.component';
-import { UserLayoutComponent } from './components/layouts/user-layout/user-layout.component';
+  MainLayoutComponent
+} from './layouts/main-layout/main-layout.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 import {
   PublicTransportPageComponent
-} from './components/pages/public-transport-page/public-transport-page.component';
-import { SignInPageComponent } from './components/pages/sign-in-page/sign-in-page.component';
-import { SignUpPageComponent } from './components/pages/sign-up-page/sign-up-page.component';
+} from './pages/public-transport-page/public-transport-page.component';
+import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
+import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
 import {
   PublicTransportFormComponent
 } from './components/public-transport-form/public-transport-form.component';
@@ -46,7 +46,7 @@ import { InjectJwtInterceptor } from './helpers/inject-jwt.interceptor';
     SignInPageComponent,
     SignUpPageComponent,
     PublicTransportPageComponent,
-    PublicTransportLayoutComponent,
+    MainLayoutComponent,
     UserLayoutComponent,
     PublicTransportTableComponent,
     PublicTransportFormComponent,
