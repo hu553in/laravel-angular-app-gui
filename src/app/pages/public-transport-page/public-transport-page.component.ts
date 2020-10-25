@@ -1,5 +1,12 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { format } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 import { Subscription } from 'rxjs';
+import {
+  PublicTransportTableComponent,
+  TableAction
+} from 'src/app/components/public-transport-table/public-transport-table.component';
 import {
   PUBLIC_TRANSPORT_FORM_ACTION_MAPPING,
   PUBLIC_TRANSPORT_TABLE_ACTIONS,
@@ -10,10 +17,6 @@ import { PublicTransport } from 'src/app/models/public-transport.model';
 import { OrganizationNameService } from 'src/app/services/organization-name.service';
 import { PublicTransportFormService } from 'src/app/services/public-transport-form.service';
 import { PublicTransportService } from 'src/app/services/public-transport.service';
-import {
-  PublicTransportTableComponent,
-  TableAction
-} from 'src/app/components/public-transport-table/public-transport-table.component';
 
 @Component({
   selector: 'app-public-transport-page',
@@ -22,6 +25,7 @@ import {
 })
 export class PublicTransportPageComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
+  private readonly dateFnsLocalesForLangs = { en: enUS };
   data: GetAllPublicTransportResponse = {
     _meta: {
       total: 0,
@@ -38,11 +42,17 @@ export class PublicTransportPageComponent implements OnDestroy {
   constructor(
     public publicTransportService: PublicTransportService,
     private organizationNameService: OrganizationNameService,
-    private publicTransportFormService: PublicTransportFormService
+    private publicTransportFormService: PublicTransportFormService,
+    private translateService: TranslateService
   ) { }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  private getDateFnsLocaleForLang(lang: string): Locale {
+    const locale = this.dateFnsLocalesForLangs[lang];
+    return locale ? locale : enUS;
   }
 
   onUpdateSubmit = (
@@ -137,6 +147,9 @@ export class PublicTransportPageComponent implements OnDestroy {
       this.publicTransportService
         .getAll({ page, rows, sortBy, order, type, organizationName })
         .subscribe(publicTransportResponse => {
+          const currentLang = this.translateService.currentLang;
+          const locale = this.getDateFnsLocaleForLang(currentLang);
+          const datetimeFormat = 'PPpp';
           this.data = {
             _meta: publicTransportResponse.data._meta,
             paginated_data: publicTransportResponse.data.paginated_data.map(
@@ -145,7 +158,17 @@ export class PublicTransportPageComponent implements OnDestroy {
                 actions: [
                   { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.EDIT },
                   { type: PUBLIC_TRANSPORT_TABLE_ACTIONS.DELETE },
-                ]
+                ],
+                created_at: format(
+                  new Date(publicTransport.created_at),
+                  datetimeFormat,
+                  { locale }
+                ),
+                updated_at: format(
+                  new Date(publicTransport.updated_at),
+                  datetimeFormat,
+                  { locale }
+                )
               })
             )
           };

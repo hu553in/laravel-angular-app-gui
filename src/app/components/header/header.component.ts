@@ -17,7 +17,10 @@ export class HeaderComponent {
   @Input()
   navBarLinks: Link[];
 
-  constructor(private router: Router, public userService: UserService) { }
+  constructor(
+    private router: Router,
+    public userService: UserService
+  ) { }
 
   logout = () => {
     this.userService.logout();

@@ -9,6 +9,9 @@ import { Link } from 'src/app/components/header/header.component';
 })
 export class MainLayoutComponent {
   navBarLinks: Link[] = [
-    { name: 'Public transport', url: `/${ROUTES.PUBLIC_TRANSPORT}` },
+    {
+      name: 'mainLayout.navBarLinks.publicTransport',
+      url: `/${ROUTES.PUBLIC_TRANSPORT}`
+    },
   ];
 }

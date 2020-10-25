@@ -34,13 +34,13 @@ export enum PUBLIC_TRANSPORT_TABLE_ACTIONS {
 }
 
 export const PUBLIC_TRANSPORT_FORM_ACTION_MAPPING = {
-  CREATE: 'Create',
-  EDIT: 'Edit'
+  CREATE: 'publicTransportForm.actions.create',
+  EDIT: 'publicTransportForm.actions.edit'
 };
 
-export const PUBLIC_TRANSPORT_TYPE_MAPPING = {
-  bus: 'Bus',
-  trolleybus: 'Trolleybus',
-  route_taxi: 'Route taxi',
-  tram: 'Tram'
-};
+export const PUBLIC_TRANSPORT_TYPES = [
+  'bus',
+  'trolleybus',
+  'route_taxi',
+  'tram'
+];

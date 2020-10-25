@@ -5,7 +5,7 @@
     *ngFor="let navBarLink of navBarLinks"
     [routerLink]="navBarLink.url"
   >
-    {{ navBarLink.name }}
+    {{ navBarLink.name | translate }}
   </a>
 </nav>
 <p class="header__name" *ngIf="!!userService.user">
@@ -18,5 +18,5 @@
   class="header__logoutButton"
   (click)="logout()"
 >
-  Logout
+  {{ "header.buttons.logout" | translate }}
 </button>

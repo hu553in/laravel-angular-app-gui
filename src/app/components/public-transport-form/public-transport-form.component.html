@@ -1,18 +1,21 @@
-<h2 mat-dialog-title>{{ data.action }} public transport</h2>
+<h2 mat-dialog-title>
+  {{ data.action | translate }}
+  {{ "publicTransportForm.titleSuffix" | translate }}
+</h2>
 <mat-dialog-content class="publicTransportForm__content" [formGroup]="form">
   <mat-form-field class="publicTransportForm__formElement">
-    <mat-label>Type</mat-label>
+    <mat-label>{{ "publicTransportFields.type" | translate }}</mat-label>
     <mat-select formControlName="type" [(value)]="data.type">
       <mat-option *ngFor="let type of publicTransportTypes" [value]="type">
-        {{ publicTransportTypeMapping[type] }}
+        {{ "publicTransportTypes." + type | translate }}
       </mat-option>
     </mat-select>
     <mat-error *ngIf="isFieldErrorPresent('type', 'required')">
-      Type is required
+      {{ "publicTransportForm.errors.typeIsRequired" | translate }}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="publicTransportForm__formElement">
-    <mat-label>Route number</mat-label>
+    <mat-label>{{ "publicTransportFields.routeNumber" | translate }}</mat-label>
     <input
       matInput
       placeholder="32b"
@@ -20,21 +23,20 @@
       formControlName="routeNumber"
     />
     <mat-error *ngIf="isFieldErrorPresent('routeNumber', 'required')">
-      Route number is required
+      {{ "publicTransportForm.errors.routeNumberIsRequired" | translate }}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="publicTransportForm__formElement">
-    <mat-label>Capacity</mat-label>
-    <input matInput placeholder="25" type="text" formControlName="capacity" />
+    <mat-label>{{ "publicTransportFields.capacity" | translate }}</mat-label>
+    <input matInput placeholder="25" type="number" formControlName="capacity" />
     <mat-error *ngIf="isFieldErrorPresent('capacity', 'required')">
-      Capacity is required
-    </mat-error>
-    <mat-error *ngIf="isFieldErrorPresent('capacity', 'pattern')">
-      Capacity is not valid integer
+      {{ "publicTransportForm.errors.capacityIsRequired" | translate }}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="publicTransportForm__formElement">
-    <mat-label>Organization name</mat-label>
+    <mat-label>
+      {{ "publicTransportFields.organizationName" | translate }}
+    </mat-label>
     <input
       matInput
       type="text"
@@ -42,7 +44,7 @@
       formControlName="organizationName"
     />
     <mat-error *ngIf="isFieldErrorPresent('organizationName', 'required')">
-      Organization name is required
+      {{ "publicTransportForm.errors.organizationNameIsRequired" | translate }}
     </mat-error>
   </mat-form-field>
 </mat-dialog-content>
@@ -53,7 +55,7 @@
       class="publicTransportForm__button"
       (click)="close()"
     >
-      Close
+      {{ "publicTransportForm.buttons.close" | translate }}
     </button>
     <button
       mat-raised-button
@@ -62,7 +64,7 @@
       [disabled]="form.invalid"
       (click)="save()"
     >
-      Save
+      {{ "publicTransportForm.buttons.save" | translate }}
     </button>
   </div>
 </mat-dialog-actions>

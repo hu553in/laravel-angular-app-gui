@@ -9,7 +9,13 @@ import { Link } from 'src/app/components/header/header.component';
 })
 export class UserLayoutComponent {
   navBarLinks: Link[] = [
-    { name: 'Sign in', url: `/${ROUTES.SIGN_IN}` },
-    { name: 'Sign up', url: `/${ROUTES.SIGN_UP}` },
+    {
+      name: 'userLayout.navBarLinks.signIn',
+      url: `/${ROUTES.SIGN_IN}`
+    },
+    {
+      name: 'userLayout.navBarLinks.signUp',
+      url: `/${ROUTES.SIGN_UP}`
+    },
   ];
 }

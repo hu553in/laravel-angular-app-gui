@@ -1,0 +1,114 @@
+{
+  "errors": {
+    "unknownError": "Unknown error"
+  },
+  "header": {
+    "buttons": {
+      "logout": "Logout"
+    }
+  },
+  "mainLayout": {
+    "navBarLinks": {
+      "publicTransport": "Public transport"
+    }
+  },
+  "userLayout": {
+    "navBarLinks": {
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    }
+  },
+  "publicTransportTypes": {
+    "route_taxi": "Route taxi",
+    "bus": "Bus",
+    "trolleybus": "Trolleybus",
+    "tram": "Tram"
+  },
+  "publicTransportFields": {
+    "id": "ID",
+    "type": "Type",
+    "routeNumber": "Route number",
+    "capacity": "Capacity",
+    "organizationName": "Organization name",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  },
+  "publicTransportTable": {
+    "columns": {
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "buttons": {
+      "addNew": "Add new"
+    }
+  },
+  "publicTransportForm": {
+    "actions": {
+      "create": "Create",
+      "edit": "Edit"
+    },
+    "titleSuffix": " public transport",
+    "buttons": {
+      "close": "Close",
+      "save": "Save"
+    },
+    "errors": {
+      "typeIsRequired": "Type is required",
+      "routeNumberIsRequired": "Route number is required",
+      "capacityIsRequired": "Capacity is required",
+      "organizationNameIsRequired": "Organization name is required"
+    }
+  },
+  "signInPage": {
+    "title": "Sign in",
+    "buttons": {
+      "signIn": "Sign in"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "errors": {
+      "emailIsRequired": "Email is required",
+      "emailIsNotValid": "Email is not valid",
+      "passwordIsRequired": "Password is required",
+      "passwordLengthShouldBeGreaterOrEqual6": "Password length should be greater or equal 6"
+    }
+  },
+  "signUpPage": {
+    "title": "Sign up",
+    "buttons": {
+      "signUp": "Sign up"
+    },
+    "placeholders": {
+      "name": "Elliot Alderson"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "passwordConfirmation": "Password confirmation"
+    },
+    "errors": {
+      "nameIsRequired": "Name is required",
+      "emailIsRequired": "Email is required",
+      "emailIsNotValid": "Email is not valid",
+      "passwordIsRequired": "Password is required",
+      "passwordLengthShouldBeGreaterOrEqual6": "Password length should be greater or equal 6",
+      "passwordConfirmationIsRequired": "Password confirmation is required",
+      "passwordConfirmationLengthShouldBeGreaterOrEqual6": "Password confirmation length should be greater or equal 6",
+      "passwordAndPasswordConfirmationShouldBeEqual": "Password and password confirmation should be equal"
+    }
+  },
+  "matPaginator": {
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "itemsPerPage": "Items per page:",
+    "firstPage": "First page",
+    "lastPage": "Last page",
+    "range": "{{ startIndex }} – {{ endIndex }} of {{ length }}"
+  }
+}

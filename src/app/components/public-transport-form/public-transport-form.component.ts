@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PUBLIC_TRANSPORT_TYPE_MAPPING } from 'src/app/misc/constants';
+import { PUBLIC_TRANSPORT_TYPES } from 'src/app/misc/constants';
 
 export interface PublicTransportFormData {
   action: string;
@@ -25,8 +25,7 @@ export interface PublicTransportFormData {
 export class PublicTransportFormComponent implements OnInit {
   form: FormGroup;
   data: PublicTransportFormData;
-  publicTransportTypeMapping = PUBLIC_TRANSPORT_TYPE_MAPPING;
-  publicTransportTypes = Object.keys(this.publicTransportTypeMapping);
+  publicTransportTypes = PUBLIC_TRANSPORT_TYPES;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,10 +39,7 @@ export class PublicTransportFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       type: [this.data.type, [Validators.required]],
       routeNumber: [this.data.routeNumber, [Validators.required]],
-      capacity: [this.data.capacity, [
-        Validators.required,
-        Validators.pattern(/^[1-9][0-9]*$/)
-      ]],
+      capacity: [this.data.capacity, [Validators.required]],
       organizationName: [this.data.organizationName, [Validators.required]]
     });
   }

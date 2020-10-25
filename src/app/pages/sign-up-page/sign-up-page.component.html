@@ -1,6 +1,6 @@
 <mat-card class="signUpPage__card">
   <mat-card-header class="signUpPage__cardHeader">
-    <mat-card-title>Sign up</mat-card-title>
+    <mat-card-title>{{ "signUpPage.title" | translate }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form
@@ -12,24 +12,28 @@
         class="signUpPage__signUpFormElement"
         appearance="standard"
       >
-        <mat-label for="name">Name</mat-label>
+        <mat-label for="name">
+          {{ "signUpPage.fields.name" | translate }}
+        </mat-label>
         <input
           matInput
           id="name"
-          placeholder="John Snow"
+          [placeholder]="'signUpPage.placeholders.name' | translate"
           type="text"
           formControlName="name"
           maxlength="255"
         />
         <mat-error *ngIf="isFieldErrorPresent('name', 'required')">
-          Name is required
+          {{ "signUpPage.errors.nameIsRequired" | translate }}
         </mat-error>
       </mat-form-field>
       <mat-form-field
         class="signUpPage__signUpFormElement"
         appearance="standard"
       >
-        <mat-label for="email">Email</mat-label>
+        <mat-label for="email">
+          {{ "signUpPage.fields.email" | translate }}
+        </mat-label>
         <input
           matInput
           id="email"
@@ -39,10 +43,10 @@
           maxlength="255"
         />
         <mat-error *ngIf="isFieldErrorPresent('email', 'required')">
-          Email is required
+          {{ "signUpPage.errors.emailIsRequired" | translate }}
         </mat-error>
         <mat-error *ngIf="isFieldErrorPresent('email', 'email')">
-          Email is not valid
+          {{ "signUpPage.errors.emailIsNotValid" | translate }}
         </mat-error>
       </mat-form-field>
       <div formGroupName="passwordWithConfirmation">
@@ -50,11 +54,13 @@
           class="signUpPage__signUpFormElement"
           appearance="standard"
         >
-          <mat-label for="password">Password</mat-label>
+          <mat-label for="password">
+            {{ "signUpPage.fields.password" | translate }}
+          </mat-label>
           <input
             matInput
             id="password"
-            placeholder="zxcqwe123"
+            placeholder="5up3r_57r0n6_p455w0rd"
             [type]="getPasswordInputType()"
             formControlName="password"
           />
@@ -66,14 +72,27 @@
             {{ showPassword ? "visibility" : "visibility_off" }}
           </mat-icon>
           <mat-error
-            *ngIf="isPasswordWithConfirmationFieldErrorPresent('password', 'required')"
+            *ngIf="
+              isPasswordWithConfirmationFieldErrorPresent(
+                'password',
+                'required'
+              )
+            "
           >
-            Password is required
+            {{ "signUpPage.errors.passwordIsRequired" | translate }}
           </mat-error>
           <mat-error
-            *ngIf="isPasswordWithConfirmationFieldErrorPresent('password', 'minlength')"
+            *ngIf="
+              isPasswordWithConfirmationFieldErrorPresent(
+                'password',
+                'minlength'
+              )
+            "
           >
-            Password length should be greater or equal 6
+            {{
+              "signUpPage.errors.passwordLengthShouldBeGreaterOrEqual6"
+                | translate
+            }}
           </mat-error>
         </mat-form-field>
         <mat-form-field
@@ -81,12 +100,12 @@
           appearance="standard"
         >
           <mat-label for="passwordConfirmation">
-            Password confirmation
+            {{ "signUpPage.fields.passwordConfirmation" | translate }}
           </mat-label>
           <input
             matInput
             id="passwordConfirmation"
-            placeholder="zxcqwe123"
+            placeholder="5up3r_57r0n6_p455w0rd"
             [type]="getPasswordConfirmationInputType()"
             formControlName="passwordConfirmation"
           />
@@ -98,17 +117,33 @@
             {{ showPasswordConfirmation ? "visibility" : "visibility_off" }}
           </mat-icon>
           <mat-error
-            *ngIf="isPasswordWithConfirmationFieldErrorPresent('passwordConfirmation', 'required')"
+            *ngIf="
+              isPasswordWithConfirmationFieldErrorPresent(
+                'passwordConfirmation',
+                'required'
+              )
+            "
           >
-            Password confirmation is required
+            {{ "signUpPage.errors.passwordConfirmationIsRequired" | translate }}
           </mat-error>
           <mat-error
-            *ngIf="isPasswordWithConfirmationFieldErrorPresent('passwordConfirmation', 'minlength')"
+            *ngIf="
+              isPasswordWithConfirmationFieldErrorPresent(
+                'passwordConfirmation',
+                'minlength'
+              )
+            "
           >
-            Password confirmation length should be greater or equal 6
+            {{
+              "signUpPage.errors.passwordConfirmationLengthShouldBeGreaterOrEqual6"
+                | translate
+            }}
           </mat-error>
           <mat-error *ngIf="arePasswordAndConfirmationDifferent()">
-            Password and password confirmation should be equal
+            {{
+              "signUpPage.errors.passwordAndPasswordConfirmationShouldBeEqual"
+                | translate
+            }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -117,7 +152,7 @@
         mat-raised-button
         color="primary"
       >
-        Sign up
+        {{ "signUpPage.buttons.signUp" | translate }}
       </button>
     </form>
   </mat-card-content>

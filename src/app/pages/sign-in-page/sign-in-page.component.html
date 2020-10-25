@@ -1,6 +1,6 @@
 ﻿﻿<mat-card class="signInPage__card">
   <mat-card-header class="signInPage__cardHeader">
-    <mat-card-title>Sign in</mat-card-title>
+    <mat-card-title>{{ "signInPage.title" | translate }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form
@@ -12,7 +12,9 @@
         class="signInPage__signInFormElement"
         appearance="standard"
       >
-        <mat-label for="email">Email</mat-label>
+        <mat-label for="email">
+          {{ "signInPage.fields.email" | translate }}
+        </mat-label>
         <input
           matInput
           id="email"
@@ -22,21 +24,23 @@
           maxlength="255"
         />
         <mat-error *ngIf="isFieldErrorPresent('email', 'required')">
-          Email is required
+          {{ "signInPage.errors.emailIsRequired" | translate }}
         </mat-error>
         <mat-error *ngIf="isFieldErrorPresent('email', 'email')">
-          Email is not valid
+          {{ "signInPage.errors.emailIsNotValid" | translate }}
         </mat-error>
       </mat-form-field>
       <mat-form-field
         class="signInPage__signInFormElement"
         appearance="standard"
       >
-        <mat-label for="password">Password</mat-label>
+        <mat-label for="password">
+          {{ "signInPage.fields.password" | translate }}
+        </mat-label>
         <input
           matInput
           id="password"
-          placeholder="zxcqwe123"
+          placeholder="5up3r_57r0n6_p455w0rd"
           [type]="getPasswordInputType()"
           formControlName="password"
         />
@@ -48,10 +52,13 @@
           {{ showPassword ? "visibility" : "visibility_off" }}
         </mat-icon>
         <mat-error *ngIf="isFieldErrorPresent('password', 'required')">
-          Password is required
+          {{ "signInPage.errors.passwordIsRequired" | translate }}
         </mat-error>
         <mat-error *ngIf="isFieldErrorPresent('password', 'minlength')">
-          Password length should be greater or equal 6
+          {{
+            "signInPage.errors.passwordLengthShouldBeGreaterOrEqual6"
+              | translate
+          }}
         </mat-error>
       </mat-form-field>
       <button
@@ -59,7 +66,7 @@
         mat-raised-button
         color="primary"
       >
-        Sign in
+        {{ "signInPage.buttons.signIn" | translate }}
       </button>
     </form>
   </mat-card-content>

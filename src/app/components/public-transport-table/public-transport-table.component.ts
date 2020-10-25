@@ -10,7 +10,7 @@ import {
   PUBLIC_TRANSPORT_FORM_ACTION_MAPPING,
   PUBLIC_TRANSPORT_TABLE_ACTIONS,
   PUBLIC_TRANSPORT_TABLE_COLUMNS,
-  PUBLIC_TRANSPORT_TYPE_MAPPING,
+  PUBLIC_TRANSPORT_TYPES,
   ROWS_OPTIONS
 } from 'src/app/misc/constants';
 import { PublicTransport } from 'src/app/models/public-transport.model';
@@ -41,8 +41,7 @@ export class PublicTransportTableComponent implements OnInit, OnDestroy {
   readonly columns = PUBLIC_TRANSPORT_TABLE_COLUMNS;
   readonly rowsOptions = ROWS_OPTIONS;
   publicTransportTableActions = PUBLIC_TRANSPORT_TABLE_ACTIONS;
-  publicTransportTypeMapping = PUBLIC_TRANSPORT_TYPE_MAPPING;
-  publicTransportTypes = Object.keys(this.publicTransportTypeMapping);
+  publicTransportTypes = PUBLIC_TRANSPORT_TYPES;
   typeSelectFormControl = new FormControl();
   organizationNameSelectFormControl = new FormControl();
   state: PublicTransportTableState = {
