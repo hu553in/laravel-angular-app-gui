@@ -1,7 +1,4 @@
 {
-  "errors": {
-    "unknownError": "Unknown error"
-  },
   "header": {
     "buttons": {
       "logout": "Logout"

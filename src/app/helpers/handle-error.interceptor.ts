@@ -48,7 +48,10 @@ export class HandleErrorInterceptor implements HttpInterceptor {
           } else if (message) {
             this.openSnackBar(error.message);
           } else {
-            this.openSnackBar('Unknown error');
+            this.openSnackBar(
+              'There\'s an unknown server error. ' +
+              'Please try again later.'
+            );
           }
         }
         return throwError(error);
