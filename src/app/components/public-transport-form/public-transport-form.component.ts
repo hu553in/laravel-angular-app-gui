@@ -39,7 +39,11 @@ export class PublicTransportFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       type: [this.data.type, [Validators.required]],
       routeNumber: [this.data.routeNumber, [Validators.required]],
-      capacity: [this.data.capacity, [Validators.required]],
+      capacity: [this.data.capacity, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(32767)
+      ]],
       organizationName: [this.data.organizationName, [Validators.required]]
     });
   }

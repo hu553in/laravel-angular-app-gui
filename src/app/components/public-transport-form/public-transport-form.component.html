@@ -20,6 +20,7 @@
       matInput
       placeholder="32b"
       type="text"
+      maxlength="255"
       formControlName="routeNumber"
     />
     <mat-error *ngIf="isFieldErrorPresent('routeNumber', 'required')">
@@ -28,9 +29,20 @@
   </mat-form-field>
   <mat-form-field class="publicTransportForm__formElement">
     <mat-label>{{ "publicTransportFields.capacity" | translate }}</mat-label>
-    <input matInput placeholder="25" type="number" formControlName="capacity" />
+    <input
+      matInput
+      placeholder="25"
+      type="number"
+      formControlName="capacity"
+    />
     <mat-error *ngIf="isFieldErrorPresent('capacity', 'required')">
       {{ "publicTransportForm.errors.capacityIsRequired" | translate }}
+    </mat-error>
+    <mat-error *ngIf="isFieldErrorPresent('capacity', 'min')">
+      {{ "publicTransportForm.errors.capacityShouldBeGreaterOrEqual1" | translate }}
+    </mat-error>
+    <mat-error *ngIf="isFieldErrorPresent('capacity', 'max')">
+      {{ "publicTransportForm.errors.capacityShouldBeLessOrEqual32767" | translate }}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="publicTransportForm__formElement">
@@ -40,6 +52,7 @@
     <input
       matInput
       type="text"
+      maxlength="255"
       placeholder="The best company in the world"
       formControlName="organizationName"
     />

@@ -40,7 +40,6 @@
           placeholder="example@gmail.com"
           type="text"
           formControlName="email"
-          maxlength="255"
         />
         <mat-error *ngIf="isFieldErrorPresent('email', 'required')">
           {{ "signUpPage.errors.emailIsRequired" | translate }}
@@ -60,6 +59,7 @@
           <input
             matInput
             id="password"
+            maxlength="255"
             placeholder="5up3r_57r0n6_p455w0rd"
             [type]="getPasswordInputType()"
             formControlName="password"
@@ -105,6 +105,7 @@
           <input
             matInput
             id="passwordConfirmation"
+            maxlength="255"
             placeholder="5up3r_57r0n6_p455w0rd"
             [type]="getPasswordConfirmationInputType()"
             formControlName="passwordConfirmation"

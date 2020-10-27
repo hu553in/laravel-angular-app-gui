@@ -42,18 +42,12 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(255)]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(255)],
-      ],
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       passwordWithConfirmation: this.formBuilder.group(
         {
           password: ['', [Validators.required, Validators.minLength(6)]],
-          passwordConfirmation: [
-            '',
-            [Validators.required, Validators.minLength(6)],
-          ]
+          passwordConfirmation: ['', [Validators.required, Validators.minLength(6)]]
         },
         { validators: [this.passwordWithConfirmationValidator] }
       )

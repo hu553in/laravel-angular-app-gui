@@ -56,6 +56,8 @@
       "typeIsRequired": "Type is required",
       "routeNumberIsRequired": "Route number is required",
       "capacityIsRequired": "Capacity is required",
+      "capacityShouldBeGreaterOrEqual1": "Capacity should be greater or equal 1",
+      "capacityShouldBeLessOrEqual32767": "Capacity should be less or equal 32767",
       "organizationNameIsRequired": "Organization name is required"
     }
   },

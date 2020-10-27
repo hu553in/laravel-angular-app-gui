@@ -32,8 +32,10 @@ export class SignInPageComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.returnUrl =
-      this.route.snapshot.queryParams.return_url || `/${ROUTES.DEFAULT}`;
+    this.returnUrl = (
+      this.route.snapshot.queryParams.return_url ||
+      `/${ROUTES.DEFAULT}`
+    );
   }
 
   ngOnDestroy(): void {
