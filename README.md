@@ -1,4 +1,4 @@
-# laravel-angular-app-gui
+# laravel-angular-app (GUI)
 
 ## Description
 
@@ -13,4 +13,4 @@ This project is a simple client-server app built with Laravel and Angular.
 
 ## How to run
 
-See README of [main repository](https://github.com/hu553in/laravel-angular-app).
+See the README of [the main repository](https://github.com/hu553in/laravel-angular-app).
